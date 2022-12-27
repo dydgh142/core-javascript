@@ -1,0 +1,26 @@
+{
+
+  "scripts": {
+
+    "start": "npx live-server client public --port=8080 --no-browser"
+
+  },
+
+  "devDependencies": {
+
+    "eslint": "^8.30.0",
+
+    "live-server": "^1.2.2",
+
+    "nodemon": "^2.0.20"
+
+  },
+
+  "dependencies": {
+
+    "gsap": "^3.11.4"
+
+  }
+
+}
+

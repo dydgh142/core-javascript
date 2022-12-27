@@ -1,0 +1,8 @@
+{
+    "editor.bracketPairColorization.enabled": true,
+"editor.guides.bracketPairs": "active",
+"editor.tokenColorCustomizations": {
+    "comments": "",
+    "textMateRules": []
+}
+}

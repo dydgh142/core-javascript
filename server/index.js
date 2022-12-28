@@ -11,3 +11,7 @@ const params = {
 };
 
 liverServer.start(params);
+
+
+
+console.log(window,globalThis,self);

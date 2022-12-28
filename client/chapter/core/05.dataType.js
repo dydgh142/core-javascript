@@ -41,10 +41,30 @@ console.log(typeof Symbol('uid'));
 
 // 언어 상, 오류
 
-// Object
+// Object   객체 리터럴
+// key, value의 집합
+// const user= new Object()
+const user = {
+  // age, name 등을 프로퍼티라고 함 {yellow}
+  name: 'tiger',
+  age: 32,
+};
 
-// Array
+// Array  배열 리터럴 방식
+//중괄호나 대괄호를 이용해 간단히 만드는것을 리터럴 이라고함.
+//let list = new Array()
+// collection
+let list = [10, 100, 1000, 1, 2, 3];
 
 // function
+function sum(a, b) {
+  return a + b;
+}
+console.log(sum(10, 30));
+
+function fishBreadCase(data) {
+  return `${data}맛 붕어빵입니다.`;
+}
+console.log(fishBreadCase('팥'));
 
 // this

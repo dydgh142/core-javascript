@@ -81,17 +81,28 @@ console.log(user.totalGrades());
 
 // pow(numeric: number, powerCount: number): number;
 
-// function pow(numeric, powerCount = 1) {
-//   total = 1;
+function pow(numeric, powerCount) {
+  let tot = 1;
+  for (let i = 0; i < powerCount; i++) {
+    tot *= numeric;
+  }
 
-//   for (i = 0; i < powerCount; i++) {
-//     total *= numeric;
+  return tot;
+}
 
-//     return total;
-//   }
-// }
+let a = pow(2, 3);
 
-// console.log(pow(2, 2));
+console.log(a);
 
 // repeat(text: string, repeatCount: number): string;
-let repeat;
+function repeat(a, b = 1) {
+  let result = '';
+
+  for (let i = 0; i < b; i++) {
+    result += a;
+  }
+
+  return result;
+}
+
+console.log(repeat('hello😘', 3));

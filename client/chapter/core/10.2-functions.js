@@ -35,7 +35,8 @@ let calculateTotal = function () {
 
   let total = 0;
 
-  let arr = Array.from(arguments); // static method
+  // static method
+  // let arr = Array.from(arguments);
   // let arr = Array.prototype.slice.call(arguments)
 
   // arr.forEach(function(item,index){
@@ -44,7 +45,7 @@ let calculateTotal = function () {
 
   // });
 
-  console.log();
+  // console.log();
 
   // for(let value of arguments){
   //   total += value;
@@ -55,9 +56,9 @@ let calculateTotal = function () {
   }
 */
 
-  return arr.reduce(function (acc, item) {
-    return acc + item;
-  });
+  // return arr.reduce(function (acc, item) {
+  //   return acc + item;
+  // });
 
   // return moneyA + moneyB + moneyC + moneyD;
 };

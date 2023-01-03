@@ -121,3 +121,16 @@ const randomUser = {
   Object.keys
   Object.values
  */
+
+for (let keyValue of Object.entries(randomUser)) {
+  let key = keyValue[0];
+  let value = keyValue[1];
+
+  console.log('L1 : ', key);
+
+  if (typeof value === 'object') {
+    for (let keyValue of Object.entries(value)) {
+      let key = keyValue[0];
+    }
+  }
+}

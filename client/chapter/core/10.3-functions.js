@@ -94,6 +94,11 @@ let a = pow(2, 3);
 
 console.log(a);
 
+let powExpression = (numeric, powerCount) =>
+  Array(powerCount)
+    .fill(null)
+    .reduce((acc) => acc * numeric, 1);
+
 // repeat(text: string, repeatCount: number): string;
 function repeat(a, b = 1) {
   let result = '';
@@ -105,4 +110,9 @@ function repeat(a, b = 1) {
   return result;
 }
 
-console.log(repeat('hello😘', 3));
+let repeatExpression = (text, repeatCount) =>
+  Array(repeatCount)
+    .fill(null)
+    .reduce((acc) => acc + text, '');
+
+console.log(repeatExpression('hello😘', 3));

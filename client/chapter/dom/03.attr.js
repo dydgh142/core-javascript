@@ -66,4 +66,4 @@ console.log(first.dataset.play); //get
 //유틸함수 만들기
 //get 함수 만들기
 
-console.log(attr('.first', 'id', 'container'));
+console.log(attr('.first', 'id'));

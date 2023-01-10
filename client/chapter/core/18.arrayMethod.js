@@ -109,7 +109,7 @@ const findIndex = users.findIndex((item) => {
 
 // filter
 let result = arr.filter((number) => {
-  return number < 100;
+  return number < 120;
 });
 console.log('result', result);
 
@@ -139,7 +139,7 @@ let sumAge = friends.reduce((sum, cur) => {
 console.log('sumAge', sumAge);
 
 let template2 = todo.reduce((acc, cur, index) => {
-  return /* html */ acc + `<li>할일${index + 1} : ${cur}의 값</li>`;
+  return /* html */ acc + `<li>할일${index + 1} : ${cur}</li>`;
 }, '');
 console.log('template2', template2);
 

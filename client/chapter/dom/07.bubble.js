@@ -11,7 +11,7 @@ const desc = getNode('.desc');
 visual.addEventListener('click', function (e) {
   console.log('target:', e.target);
   console.log('currentTarget: ', e.currentTarget);
-  // console.log(this === e.currentTarget);
+  console.log(this === e.currentTarget);
   console.log('%c visual', 'background: dodgerblue');
 
   css('.pop', 'display', 'block');

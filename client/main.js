@@ -5,10 +5,12 @@
 // 5. 화면 출력
 
 // 콘솔창에 firstInput.value로 찾을 수 있음.
-const firstInput = getNode('#firstNumber');
-const secondInput = getNode('#secondNumber');
-const done = getNode('#done');
 
+const firstInput = getNode('#firstNumber'); //첫번째 숫자 노드요소를 받아옴
+const secondInput = getNode('#secondNumber'); //두번째 숫자
+const done = getNode('#done'); //done버튼
+
+//입력받은 값을 반환해주는 함수
 function getInputValue(node) {
   if (typeof node === 'string') node = getNode(node);
   if (node.tagName !== 'INPUT')

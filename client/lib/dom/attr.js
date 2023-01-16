@@ -1,5 +1,4 @@
-
-import { getNode } from "./getNode.js";
+import { getNode } from './getNode.js';
 
 /* 
 
@@ -72,12 +71,10 @@ attr()
 
  */
 
-
+// node = '.first'
+// prop = 'class'
 
 function getAttr(node, prop) {
-  // node = '.first'
-  // prop = 'class'
-
   if (typeof node === 'string') {
     node = getNode(node);
   }

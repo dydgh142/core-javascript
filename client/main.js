@@ -6,17 +6,17 @@ import {
   clearContents,
   isNumericString,
   showAlert,
-  attr,
+  copy,
+  addClass,
+  removeClass,
 } from './lib/index.js';
 import { jujeobData } from './data/data.js';
 
 const submit = getNode('#submit'); //id가 submit인 주접떨기 버튼
-const result = getNode('.result'); //결과를 복사하기위한 버튼
+const resultArea = getNode('.result'); //결과를 복사하기위한 버튼
 
 function clickSubmitHandler(e) {
   e.preventDefault(); //함수 초기화
-
-  let target = e.target;
 
   //nameFiled에 들어온 값을 반환하는 getInputValue함수를 이용
   let name = getInputValue('#nameField');
@@ -29,6 +29,20 @@ function clickSubmitHandler(e) {
   if (name === '') {
     console.log('입력해주세요');
     showAlert('.alert-error', '잘못된 정보입니다.', '2000');
+
+    //GSAP
+    gsap.fromTo(
+      resultArea,
+      0.01,
+      { x: -5 },
+      { x: 5, clearProps: 'x', repeat: 20 }
+    );
+
+    // addClass(resultArea, 'shake');
+    // setTimeout(() => {
+    //   removeClass(resultArea, 'shake');
+    // }, 1000);
+
     return;
   }
   //이름이 숫자로만 이루어져있을때에도 경고문
@@ -40,16 +54,24 @@ function clickSubmitHandler(e) {
   //로그에 pick이 제대로 찍혔는지 확인
   console.log(pick);
 
-  //클릭된 곳이 result. 즉 결과가 나온 곳이면 복사하기 (미완성)
-  if (target.dataset.name === 'result') {
-    let copy = attr('.alert-success', 'class');
-    console.log(copy);
-  }
-
   //먼저 결과값이 나와야하는 곳의 content를 모두 지우고
-  clearContents(result);
+  clearContents(resultArea);
   //그리고나서 결과값을(pick)을 넣어서 출력함.
-  insertLast(result, pick);
+  insertLast(resultArea, pick);
 }
 
 submit.addEventListener('click', clickSubmitHandler);
+
+function clickCopyHandler() {
+  let text = resultArea.textContent;
+
+  //console.log(copy(text));
+
+  // copy 함수 -> navigator.clipboard.writeText(text)
+  copy(text).then(() => {
+    //promise 구문 (그냥 문법임)
+    showAlert('.alert-success', '클립보드가 복사되었습니다.', 2000);
+  });
+}
+
+resultArea.addEventListener('click', clickCopyHandler);

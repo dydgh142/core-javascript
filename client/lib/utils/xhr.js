@@ -1,35 +1,41 @@
-/* 
-  readyState
-  0 : uninitalized  //초기화  
-  1 : loading       //로딩
-  2 : loaded        //로딩이 완료됨
-  3 : interactive   //인터렉티브
-  4 : complete      //완료
-*/
+/* readyState
+  0: uninitalized // 초기화 
+  1: loading // 로딩
+  2: loaded // 로딩이 완료된 
+  3: interactive // 인터랙티브
+  4: complete // 완료 
+  */
 
-function xhrData({
+// xhrData 함수 만들기 method, url
+
+export function xhrData({
   url = '',
   method = 'GET',
   body = null,
   onSuccess = null,
   onFail = null,
-  headers = { 'Content-Type': 'application/json' },
-}) {
-  // const { method, url, body } = options;
-  const xhr = new XMLHttpRequest();
+  headers = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+  },
+} = {}) {
+  //xhrData(options)로 받아서 const 아래와같이 선언해서 사용해도 됨.
+  // const {url,method,body} = options;
 
-  // .open() + .send() => 항상 세트임!!!!
+  const xhr = new XMLHttpRequest();
+  // console.log(xhr);
   // 비동기 통신 오픈
   xhr.open(method, url);
 
-  //키와 value를 반환함.
+  //header를 key와 value값으로 나누는 작업.
   //entries는 headers 객체를 배열로  forEach는 구조분해할당을 통해 key,value로 받기
   //froEach는 배열메서드라 배열로꼭 바꿔야함. 그것이 entries.
-  Object.entries(headers).forEach(([key, value]) => {
-    xhr.setRequestHeader(key, value);
-  });
+  // Object.entries(headers).forEach(([key,value])=>{
+  //   xhr.setRequestHeader(key,value);
+  // })
 
-  // 객체 구조 분해 할당
+  //readyState는 로딩 상태에 대한 정보를 주는 document 의 속성이다.
+  //readyState 속성의 변화를 관찰하는 readystatechange 이벤트를 활용
   xhr.addEventListener('readystatechange', () => {
     const { status, readyState, response } = xhr; // 객체 구조 분해 할당
 
@@ -40,12 +46,29 @@ function xhrData({
         onSuccess(JSON.parse(response));
       }
     } else {
-      onFail(JSON.parse('통신실패'));
+      // console.error();
+      onFail('통신 실패');
     }
   });
+
   // 서버에 요청
   xhr.send(JSON.stringify(body));
 }
+
+/* 
+xhrData({
+  url:'https://jsonplaceholder.typicode.com/users/1',
+  method:'POST',
+  onSuccess: (result)=>{
+    console.log(result);
+  },
+  onFail:(err)=>{
+    console.error(err);
+  }
+})
+ */
+
+// shorthand property
 
 xhrData.get = (url, onSuccess, onFail) => {
   xhrData({
@@ -84,35 +107,70 @@ xhrData.delete = (url, body, onSuccess, onFail) => {
   });
 };
 
-// xhrData({
-//   url: 'https://jsonplaceholder.typicode.com/users',
-//   onSuccess: (result) => {
-//     console.log(result);
-//   },
-//   onFail: (err) => {
-//     console.error(err);
-//   },
-// });
+/* 
+xhrData.delete(
+  'https://jsonplaceholder.typicode.com/users/3',
+  (result)=>{
+    console.log(result);
+  },
+  (err)=>{
+    console.log(err);
+  }
+)
 
-// xhrData('POST', 'https://jsonplaceholder.typicode.com/users', {
-//   name: 'MESSI',
-//   username: 'GOAT',
-//   email: 'goat@messi.psg',
-//   address: {
-//     street: 'Kulas Light',
-//     suite: 'Apt. 556',
-//     city: 'Gwenborough',
-//     zipcode: '92998-3874',
-//     geo: {
-//       lat: '-37.3159',
-//       lng: '81.1496',
-//     },
-//   },
-//   phone: '1-770-736-8031 x56442',
-//   website: 'hildegard.org',
-//   company: {
-//     name: 'Romaguera-Crona',
-//     catchPhrase: 'Multi-layered client-server neural-net',
-//     bs: 'harness real-time e-markets',
-//   },
-// });
+ */
+
+/* 
+xhrData('POST','https://jsonplaceholder.typicode.com/users',{
+  "name": "kindtiger",
+  "username": "seonbeom",
+  "email": "tiger@euid.dev",
+  "address": {
+    "street": "Kulas Light",
+    "suite": "Apt. 556",
+    "city": "Gwenborough",
+    "zipcode": "92998-3874",
+    "geo": {
+      "lat": "-37.3159",
+      "lng": "81.1496"
+    }
+  },
+  "phone": "010-7169-0262",
+  "website": "hildegard.org",
+  "company": {
+    "name": "Romaguera-Crona",
+    "catchPhrase": "Multi-layered client-server neural-net",
+    "bs": "harness real-time e-markets"
+  }
+})
+ */
+
+/* 
+
+let movePage = function (주소,성공,실패){
+
+  // 조건에 따라 조건이 잘 맞으면 성공() || 실패()
+
+  if(주소 === '네이버'){
+    성공(주소);
+  }else{
+    실패();
+  }
+
+};
+
+movePage(
+  '네이바',
+  (주소)=>{
+    console.log('3초후 '+ 주소 +'로 이동합니다.');
+    setTimeout(() => {
+      window.location.href = 'https://www.naver.com/'
+    }, 3000);
+  }
+  ,
+  ()=>{
+    console.log('잘못된 주소를 입력했습니다.');
+  })
+
+
+ */

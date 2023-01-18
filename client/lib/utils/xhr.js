@@ -6,8 +6,11 @@
   4: complete // 완료 
   */
 
+import { typeError } from '../error/typeError.js';
+
 // xhrData 함수 만들기 method, url
 
+//CallBack 방식
 export function xhrData({
   url = '',
   method = 'GET',
@@ -37,12 +40,16 @@ export function xhrData({
   //readyState는 로딩 상태에 대한 정보를 주는 document 의 속성이다.
   //readyState 속성의 변화를 관찰하는 readystatechange 이벤트를 활용
   xhr.addEventListener('readystatechange', () => {
+    // - 200 : 서버에 문서가 존재함.
+    // 404 : 서버에 문서가 존재하지 않음.
     const { status, readyState, response } = xhr; // 객체 구조 분해 할당
 
     if (status >= 200 && status < 400) {
       if (readyState === 4) {
         console.log('통신 성공');
 
+        //status와 redayState 모두 만족하다면 응답받은 response를 파싱해옴.
+        // 받을때는 객체화
         onSuccess(JSON.parse(response));
       }
     } else {
@@ -51,7 +58,7 @@ export function xhrData({
     }
   });
 
-  // 서버에 요청
+  // 서버에 요청 (요청할때는 문자화)
   xhr.send(JSON.stringify(body));
 }
 
@@ -70,6 +77,7 @@ xhrData({
 
 // shorthand property
 
+//get은 xhrData의 method가 기본값이 get으로 되어있기 때문에 생략가능.
 xhrData.get = (url, onSuccess, onFail) => {
   xhrData({
     url,
@@ -78,6 +86,7 @@ xhrData.get = (url, onSuccess, onFail) => {
   });
 };
 
+//post는 게시하고 성공혹은 실패여부를 받아와야함.
 xhrData.post = (url, body, onSuccess, onFail) => {
   xhrData({
     method: 'POST',
@@ -171,6 +180,86 @@ movePage(
   ()=>{
     console.log('잘못된 주소를 입력했습니다.');
   })
-
-
  */
+const defaultOptions = {
+  url: '',
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+  },
+  body: null,
+};
+
+function xhrPromise(options = {}) {
+  const xhr = new XMLHttpRequest();
+
+  const { method, url, body, headers } = Object.assign(
+    {},
+    defaultOptions,
+    options
+  );
+
+  if (!url) typeError('url 인자는 반드시 필요합니다.');
+
+  xhr.open(method, url);
+
+  xhr.send(body ? JSON.stringify(body) : null);
+
+  return new Promise((resolve, reject) => {
+    xhr.addEventListener('readystatechange', () => {
+      const { status, readyState, response } = xhr;
+
+      if (status >= 200 && status < 400) {
+        if (readyState === 4) {
+          resolve(JSON.parse(response));
+        }
+      } else {
+        reject('err');
+      }
+    });
+  });
+}
+
+// xhrData.get(
+//   'wwww.naver.com',
+//   ()=>{}, // success
+//   ()=>{} // fail
+// )
+xhrPromise.get = (url) => {
+  return xhrPromise({
+    url,
+  });
+};
+
+xhrPromise.post = (url, body) => {
+  return xhrPromise({
+    url,
+    body,
+    method: 'POST',
+  });
+};
+
+xhrPromise.put = (url, body) => {
+  return xhrPromise({
+    url,
+    body,
+    method: 'PUT',
+  });
+};
+
+xhrPromise.delete = (url) => {
+  return xhrPromise({
+    url,
+    method: 'DELETE',
+  });
+};
+
+xhrPromise
+  .get('https://jsonplaceholder.typicode.com/users/1')
+  .then((res) => {
+    insertLast(document.body, JSON.stringify(res));
+  })
+  .catch((err) => {
+    console.log(err);
+  });

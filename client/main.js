@@ -1,11 +1,8 @@
+import { xhrData, insertLast } from './lib/index.js';
 
+let response = tiger.get('https://jsonplaceholder.typicode.com/users/1');
 
-
-
-import { xhrData,insertLast } from "./lib/index.js";
-
-
-
+console.log(response);
 /* 
 
 xhrData.get(

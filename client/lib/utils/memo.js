@@ -24,7 +24,7 @@ export const memo = (() => {
 
 
 
-// memo('name',()=>'tiger')
+memo('name',()=>'tiger')
 // memo('name')
 
 // console.log(memo('name',()=>'tttt'));

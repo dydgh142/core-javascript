@@ -1,62 +1,108 @@
-//xhr 통신 간단한 버전 fetch  사용
+
+
+
 const defaultOptions = {
   method: 'GET',
   mode: 'cors',
-  body: null,
+  body:null,
   cache: 'no-cache',
   credential: 'same-origin',
-  redirect: 'follow',
-  referrerPolicy: 'no-referrer',
-  headers: {
-    'Content-Type': 'application/json; charset=UTF-8',
-  },
-};
+  redirect:'follow',
+  referrerPolicy:'no-referrer',
+  headers:{
+    'Content-Type':'application/json; charset=UTF-8'
+  }
+}
 
-export const tiger = async (options = {}) => {
-  const { url, ...restOptions } = {
+
+
+export const tiger = async (options = {}) =>{
+
+  const {url, ...restOptions} = {
     ...defaultOptions,
     ...options,
-    headers: { ...defaultOptions.headers, ...options.headers },
-  };
+    headers: {...defaultOptions.headers, ...options.headers}
+  }
 
-  let response = await fetch(url, restOptions);
 
-  if (response.ok) {
-    response.data = await response.json();
+  let response = await fetch(url,restOptions)
+
+  if(response.ok){
+    response.data = await response.json()
   }
 
   // console.log(response);
 
   return response;
-};
+}
 
-//get, post......
-tiger.get = (url, options) => {
-  tiger({ url, ...options });
-};
 
-tiger.post = (url, body, options) => {
-  tiger({
-    method: 'POST',
+
+tiger.get = async (url,options) => {
+  return tiger({
     url,
-    body: JSON.stringify(body),
-    ...options,
-  });
-};
+    ...options
+  })
+}
 
-tiger.put = (url, body, options) => {
-  tiger({
-    method: 'PUT',
+tiger.post = (url,body,options) =>{
+  return tiger({
+    method:'POST',
     url,
-    body: JSON.stringify(body),
-    ...options,
-  });
-};
+    body:JSON.stringify(body),
+    ...options
+  })
+}
 
-tiger.delet = (url, options) => {
-  tiger({
-    method: 'DELETE',
+tiger.put = (url,body,options) =>{
+  return tiger({
+    method:'PUT',
     url,
-    ...options,
-  });
-};
+    body:JSON.stringify(body),
+    ...options
+  })
+}
+
+tiger.delete = (url,options) =>{
+  return tiger({
+    method:'DELETE',
+    url,
+    ...options
+  })
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
